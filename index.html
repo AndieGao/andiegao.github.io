@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andie Gao</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f5f0e8;
+    --ink: #111110;
+    --muted: #8a8680;
+    --accent: #c8f060;
+    --accent-dark: #1a1a18;
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'Instrument Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 48px;
+    mix-blend-mode: normal;
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 18px;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 140px 48px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.1s forwards;
+  }
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(72px, 11vw, 148px);
+    line-height: 0.92;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.2s forwards;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--muted);
+  }
+  .hero-desc {
+    font-family: var(--serif);
+    font-size: clamp(20px, 2.8vw, 32px);
+    font-style: italic;
+    color: var(--muted);
+    max-width: 640px;
+    line-height: 1.4;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.35s forwards;
+  }
+  .hero-chips {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s forwards;
+  }
+  .chip {
+    font-size: 12px;
+    padding: 6px 16px;
+    border: 1px solid rgba(17,17,16,0.18);
+    border-radius: 999px;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+  }
+  .chip.active {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    right: 48px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    opacity: 0;
+    animation: fadeUp 1s 0.8s forwards;
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    border-top: 1px solid rgba(17,17,16,0.1);
+    border-bottom: 1px solid rgba(17,17,16,0.1);
+    overflow: hidden;
+    padding: 16px 0;
+    background: var(--ink);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 48px;
+    white-space: nowrap;
+    animation: marquee 18s linear infinite;
+  }
+  .marquee-item {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--cream);
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ABOUT */
+  .about {
+    padding: 120px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+  .about-heading {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1.1;
+    font-weight: 400;
+    margin-bottom: 28px;
+  }
+  .about-heading em { font-style: italic; color: var(--muted); }
+  .about-body {
+    font-size: 17px;
+    color: #444;
+    line-height: 1.75;
+    margin-bottom: 24px;
+  }
+  .about-right {
+    padding-top: 48px;
+  }
+  .skill-list {
+    list-style: none;
+    border-top: 1px solid rgba(17,17,16,0.1);
+  }
+  .skill-list li {
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(17,17,16,0.1);
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .skill-list li span {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* WORKS */
+  .works {
+    padding: 80px 48px 120px;
+  }
+  .works-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+  .works-heading {
+    font-family: var(--serif);
+    font-size: clamp(40px, 5vw, 72px);
+    line-height: 1.0;
+    font-weight: 400;
+  }
+  .works-sub {
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 280px;
+    text-align: right;
+    line-height: 1.6;
+  }
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .project-row {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+    gap: 32px;
+    padding: 32px 0;
+    border-top: 1px solid rgba(17,17,16,0.1);
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.2s;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .project-row:last-child { border-bottom: 1px solid rgba(17,17,16,0.1); }
+  .project-row:hover { background: rgba(17,17,16,0.03); padding-left: 16px; padding-right: 16px; margin: 0 -16px; }
+  .proj-num {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+  .proj-info {}
+  .proj-title {
+    font-family: var(--serif);
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 400;
+    margin-bottom: 6px;
+  }
+  .proj-desc {
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .proj-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .tag {
+    font-size: 11px;
+    padding: 4px 10px;
+    border: 1px solid rgba(17,17,16,0.15);
+    border-radius: 4px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* CONTACT */
+  .contact {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 120px 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .contact .section-label { color: rgba(245,240,232,0.4); }
+  .contact-heading {
+    font-family: var(--serif);
+    font-size: clamp(48px, 8vw, 112px);
+    line-height: 0.95;
+    font-weight: 400;
+    margin-bottom: 40px;
+    letter-spacing: -0.02em;
+  }
+  .contact-heading em { font-style: italic; color: rgba(245,240,232,0.4); }
+  .contact-email {
+    font-family: var(--serif);
+    font-size: clamp(18px, 2.2vw, 26px);
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200,240,96,0.3);
+    padding-bottom: 4px;
+    margin-bottom: 64px;
+    transition: border-color 0.2s;
+  }
+  .contact-email:hover { border-color: var(--accent); }
+  .contact-footer {
+    display: flex;
+    gap: 32px;
+    font-size: 13px;
+    color: rgba(245,240,232,0.3);
+    letter-spacing: 0.04em;
+  }
+  .contact-footer a {
+    color: rgba(245,240,232,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-footer a:hover { color: var(--cream); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .hero { padding: 120px 24px 80px; }
+    .about { grid-template-columns: 1fr; gap: 48px; padding: 80px 24px; }
+    .works { padding: 60px 24px 80px; }
+    .works-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .works-sub { text-align: left; }
+    .project-row { grid-template-columns: 48px 1fr; }
+    .proj-tags { display: none; }
+    .contact { padding: 80px 24px; }
+    .hero-scroll { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Andie Gao</a>
+  <ul class="nav-links">
+    <li><a href="#works">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">Game Designer & UX Thinker · USC '26</p>
+  <h1 class="hero-name">Andie<br><em>Gao.</em></h1>
+  <p class="hero-desc">I design games and experiences that make people feel something.</p>
+  <div class="hero-chips">
+    <span class="chip active">Game Design</span>
+    <span class="chip">UX / UI</span>
+    <span class="chip">Storytelling</span>
+    <span class="chip">Los Angeles</span>
+  </div>
+  <span class="hero-scroll">Scroll down</span>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Game Design</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">UX Research</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Interaction Design</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Prototyping</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Figma</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Storytelling</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Game Design</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">UX Research</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Interaction Design</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Prototyping</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Figma</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Storytelling</span>
+    <span class="marquee-item">·</span>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="about-left reveal">
+    <p class="section-label">About me</p>
+    <h2 class="about-heading">I make things that <em>matter.</em></h2>
+    <p class="about-body">
+      I'm a final-year student at USC studying game design and UX, with a deep interest in how systems and stories shape human behavior.
+    </p>
+    <p class="about-body">
+      Whether I'm designing tabletop mechanics or digital interfaces, I care about the moment a user feels truly seen by what they're holding.
+    </p>
+  </div>
+  <div class="about-right reveal">
+    <p class="section-label">Skills</p>
+    <ul class="skill-list">
+      <li>Game Design <span>Tabletop · Digital</span></li>
+      <li>UX / UI Design <span>Figma · Prototyping</span></li>
+      <li>User Research <span>Qualtrics · Interviews</span></li>
+      <li>Data Analysis <span>Python · Spreadsheets</span></li>
+      <li>Storytelling <span>Narrative · Systems</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="works" id="works">
+  <div class="works-header reveal">
+    <h2 class="works-heading">Featured<br>Works</h2>
+    <p class="works-sub">A selection of projects where curiosity drove the process.</p>
+  </div>
+
+  <div class="project-list">
+    <div class="project-row reveal">
+      <span class="proj-num">01</span>
+      <div class="proj-info">
+        <h3 class="proj-title">Build A Better Man</h3>
+        <p class="proj-desc">A tabletop card game about AI training, masculinity, and performance.</p>
+      </div>
+      <div class="proj-tags">
+        <span class="tag">Game Design</span>
+        <span class="tag">Tabletop</span>
+      </div>
+    </div>
+
+    <div class="project-row reveal">
+      <span class="proj-num">02</span>
+      <div class="proj-info">
+        <h3 class="proj-title">TapBlaze Internship Test</h3>
+        <p class="proj-desc">Feature design and data analysis for Good Pizza, Great Pizza.</p>
+      </div>
+      <div class="proj-tags">
+        <span class="tag">UX Design</span>
+        <span class="tag">Data</span>
+      </div>
+    </div>
+
+    <div class="project-row reveal">
+      <span class="proj-num">03</span>
+      <div class="proj-info">
+        <h3 class="proj-title">Pawradise</h3>
+        <p class="proj-desc">Luxury pet boarding app for premium Los Angeles clientele.</p>
+      </div>
+      <div class="proj-tags">
+        <span class="tag">Figma</span>
+        <span class="tag">Mobile UI</span>
+      </div>
+    </div>
+
+    <div class="project-row reveal">
+      <span class="proj-num">04</span>
+      <div class="proj-info">
+        <h3 class="proj-title">DesignFund</h3>
+        <p class="proj-desc">A crowdfunding platform concept grounded in Qualtrics survey research.</p>
+      </div>
+      <div class="proj-tags">
+        <span class="tag">UX Research</span>
+        <span class="tag">Platform</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <p class="section-label">Let's talk</p>
+  <h2 class="contact-heading">Got a project<br>in <em>mind?</em></h2>
+  <a href="mailto:your@email.com" class="contact-email">your@email.com</a>
+  <div class="contact-footer">
+    <a href="#">LinkedIn</a>
+    <a href="#">GitHub</a>
+    <a href="#">Resume</a>
+    <span>© 2026 Andie Gao</span>
+  </div>
+</section>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
