@@ -10,10 +10,12 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:     #fafaf8;
-  --ink:    #1a1917;
-  --muted:  #9a9490;
-  --border: rgba(26,25,23,.1);
+  --bg:       #fafaf8;
+  --surface:  #ffffff;
+  --ink:      #1a1917;
+  --muted:    #9a9490;
+  --border:   rgba(26,25,23,.1);
+  --dot-color: rgba(26,25,23,.065);
 
   --red:    #e75555;
   --green:  #a9e185;
@@ -32,7 +34,30 @@
   --teal-tab:   #2a9098;
 
   --sans: 'Nunito', system-ui, sans-serif;
+  --hand: 'Caveat', cursive;
 }
+
+/* ── DARK MODE ── */
+body.dark {
+  --bg:          #131311;
+  --surface:     #1c1b19;
+  --ink:         #ede8df;
+  --muted:       #706a62;
+  --border:      rgba(237,232,223,.1);
+  --dot-color:   rgba(237,232,223,.1);
+  --red-body:    #200f0f;
+  --yellow-body: #1f1c00;
+  --pink-body:   #200a14;
+  --teal-body:   #0a1d1e;
+}
+body.dark nav.scrolled       { background: rgba(19,19,17,.93); }
+body.dark .marquee-wrap      { background: #4a186a; }
+body.dark .experience        { background: var(--surface); border-color: rgba(237,232,223,.08); }
+body.dark .exp-card          { background: var(--bg); }
+body.dark .folder-body       { box-shadow: 0 4px 24px rgba(0,0,0,.35); }
+body.dark .contact           { background: #0c0c0a; }
+body.dark .skill-list li     { border-color: var(--border); }
+body.dark .theme-toggle      { background: var(--surface); border-color: var(--border); }
 
 html { scroll-behavior: smooth; }
 
@@ -76,7 +101,7 @@ body {
 /* ── FIGMA SELECTION FRAME ── */
 .sel-frame {
   position: fixed; top: 0; left: 0;
-  width: 200px; height: 120px;
+  width: 270px; height: 160px;
   pointer-events: none;
   z-index: 300;
   opacity: 0;
@@ -161,7 +186,7 @@ nav.scrolled {
   display: flex; align-items: center; justify-content: center;
   position: relative; overflow: hidden;
   padding: 120px 52px 80px;
-  background-image: radial-gradient(circle, rgba(26,25,23,.065) 1.5px, transparent 1.5px);
+  background-image: radial-gradient(circle, var(--dot-color) 1.5px, transparent 1.5px);
   background-size: 28px 28px;
 }
 .hero-center { text-align: center; position: relative; z-index: 2; }
@@ -439,15 +464,75 @@ nav.scrolled {
 .rd2 { transition-delay: .22s; }
 .rd3 { transition-delay: .36s; }
 
+/* ── THEME TOGGLE ── */
+.theme-toggle {
+  width: 40px; height: 40px;
+  border: 1.5px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  font-size: 18px;
+  cursor: none;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .25s, border-color .25s;
+  flex-shrink: 0;
+}
+.theme-toggle:hover { transform: scale(1.12) rotate(15deg); border-color: var(--ink); }
+
+/* ── EXPERIENCE ── */
+.experience {
+  padding: 100px 52px 120px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  transition: background .35s, border-color .35s;
+}
+.exp-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 52px;
+}
+.exp-heading { font-size: clamp(40px,5vw,68px); font-weight: 900; line-height: 1; letter-spacing: -.03em; }
+.exp-heading em { font-style: normal; color: var(--teal); }
+.exp-sub { font-family: var(--hand); font-size: 17px; color: var(--muted); max-width: 220px; text-align: right; line-height: 1.4; font-style: italic; }
+.exp-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.exp-card {
+  padding: 32px;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  display: flex; flex-direction: column; gap: 0;
+  background: var(--bg);
+  transition: transform .3s, box-shadow .3s, background .35s, border-color .35s;
+}
+.exp-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,.09); }
+.exp-logo {
+  width: 54px; height: 54px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 900; letter-spacing: .04em;
+  margin-bottom: 24px; flex-shrink: 0;
+}
+.logo-eg  { background: var(--red);    color: white; }
+.logo-t   { background: var(--teal);   color: var(--ink); }
+.logo-usc { background: var(--yellow); color: var(--ink); }
+.exp-role  { font-size: 17px; font-weight: 900; line-height: 1.2; margin-bottom: 3px; letter-spacing: -.01em; }
+.exp-company { font-size: 12px; font-weight: 800; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; }
+.exp-desc { font-size: 14px; color: var(--muted); line-height: 1.72; font-weight: 400; flex-grow: 1; margin-bottom: 24px; }
+.exp-period {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 999px;
+  border: 1.5px solid var(--border);
+  color: var(--muted); width: fit-content;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .folder-body { grid-template-columns: 1fr; }
   .folder-right { min-height: 200px; }
+  .exp-cards { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
   nav { padding: 16px 24px; }
-  .nav-avail { display: none; }
+  .theme-toggle { display: flex; }
   .hero { padding: 100px 24px 70px; }
+  .experience { padding: 70px 24px 80px; }
   .works { padding: 70px 24px 0; }
   .works-header { flex-direction: column; align-items: flex-start; gap: 12px; }
   .works-sub { text-align: left; }
@@ -485,11 +570,9 @@ nav.scrolled {
     <li><a href="#works">🗂 Work</a></li>
     <li><a href="#about">👋 About</a></li>
     <li><a href="playground.html">🎨 Playground</a></li>
-    <li><a href="#contact">✉️ Contact</a></li>
+    <li><a href="contact.html">✉️ Contact</a></li>
   </ul>
-  <div class="nav-avail">
-    <span class="avail-dot"></span>Available for work
-  </div>
+  <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">🌙</button>
 </nav>
 
 <section class="hero">
@@ -649,12 +732,41 @@ nav.scrolled {
       <li>Game Design    <span>Systems · Narrative · Level</span></li>
       <li>Production     <span>Roadmaps · Playtesting</span></li>
     </ul>
-    <p class="section-label reveal" style="margin-top:36px;">Experience</p>
-    <ul class="skill-list reveal rd1">
-      <li>Game Production Intern   <span>Echo Game · 2024</span></li>
-      <li>Game Designer Intern     <span>Tencent · 2025</span></li>
-      <li>Lead Designer            <span>AGP of USC · 2025</span></li>
-    </ul>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section class="experience" id="experience">
+  <div class="exp-header reveal">
+    <h2 class="exp-heading">Where I've <em>worked.</em></h2>
+    <p class="exp-sub">internships, roles,<br>&amp; collaborations</p>
+  </div>
+  <div class="exp-cards">
+
+    <div class="exp-card reveal">
+      <div class="exp-logo logo-eg">EG</div>
+      <p class="exp-role">Game Production Intern</p>
+      <p class="exp-company">Echo Game</p>
+      <p class="exp-desc">Supported end-to-end production pipelines for an indie game studio — coordinating between design, engineering, and art to keep development on schedule and quality high.</p>
+      <span class="exp-period">📅 2024</span>
+    </div>
+
+    <div class="exp-card reveal rd1">
+      <div class="exp-logo logo-t">T</div>
+      <p class="exp-role">Game Designer Intern</p>
+      <p class="exp-company">Tencent</p>
+      <p class="exp-desc">Designed and iterated on player-facing systems and mechanics for mobile titles at one of the world's largest gaming companies. Participated in cross-functional critique sessions and shipped features.</p>
+      <span class="exp-period">📅 2025</span>
+    </div>
+
+    <div class="exp-card reveal rd2">
+      <div class="exp-logo logo-usc">USC</div>
+      <p class="exp-role">Lead Game Designer</p>
+      <p class="exp-company">AGP of USC</p>
+      <p class="exp-desc">Led a multidisciplinary team to design and ship <em>Aftertaste</em> — a narrative game exploring the lingering feeling after something ends. Responsible for systems design, team coordination, and creative direction.</p>
+      <span class="exp-period">📅 2025</span>
+    </div>
+
   </div>
 </section>
 
@@ -663,9 +775,9 @@ nav.scrolled {
   <h2 class="contact-heading reveal">Got a project<br>in <em>mind?</em></h2>
   <a href="mailto:ziqigao0526@gmail.com" class="contact-email reveal">ziqigao0526@gmail.com</a>
   <div class="contact-footer reveal">
-    <a href="#">LinkedIn</a>
-    <a href="#">GitHub</a>
-    <a href="#">Resume</a>
+    <a href="https://www.linkedin.com/in/andiegao/" target="_blank">LinkedIn</a>
+    <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+    <a href="contact.html">Full Contact Page →</a>
     <span>© 2026 Andie Gao</span>
   </div>
 </section>
@@ -675,6 +787,17 @@ nav.scrolled {
   const dot      = document.getElementById('cursorDot');
   const frame    = document.getElementById('selFrame');
   const heroName = document.getElementById('heroName');
+  const toggle   = document.getElementById('themeToggle');
+
+  // ── DARK MODE ──
+  const saved = localStorage.getItem('ag-theme');
+  if (saved === 'dark') { document.body.classList.add('dark'); toggle.textContent = '☀️'; }
+
+  toggle.addEventListener('click', () => {
+    const isDark = document.body.classList.toggle('dark');
+    toggle.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('ag-theme', isDark ? 'dark' : 'light');
+  });
 
   let mx = 0, my = 0;
   let fx = 0, fy = 0;
@@ -720,8 +843,8 @@ nav.scrolled {
     if (nameHover) {
       fx += (mx - fx) * 0.1;
       fy += (my - fy) * 0.1;
-      // center the 200×120 frame on cursor, shifted up so it floats above
-      frame.style.transform = `translate(${fx - 100}px,${fy - 160}px)`;
+      // center the 270×160 frame on cursor, shifted above
+      frame.style.transform = `translate(${fx - 135}px,${fy - 195}px)`;
     }
     requestAnimationFrame(tick);
   }
