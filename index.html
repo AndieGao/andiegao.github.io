@@ -129,6 +129,19 @@ body {
 .h-bm { bottom:-4px; left:50%; transform:translateX(-50%); }
 .h-lm { left:-4px; top:50%; transform:translateY(-50%); }
 .h-rm { right:-4px; top:50%; transform:translateY(-50%); }
+.sel-photo {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.sel-fallback {
+  background: var(--ink);
+  align-items: center; justify-content: center;
+  font-size: 32px; font-weight: 900;
+  color: var(--yellow);
+  display: none;
+}
 .sel-label {
   position: absolute;
   top: -26px; left: 0;
@@ -552,6 +565,10 @@ nav.scrolled {
 
 <!-- Figma-style selection frame on name hover -->
 <div class="sel-frame" id="selFrame">
+  <!-- ↓ Replace me.jpg with your actual photo filename -->
+  <img src="me.jpg" class="sel-photo" alt="Andie Gao"
+       onerror="this.style.display='none'; document.getElementById('selFallback').style.display='flex';">
+  <div class="sel-photo sel-fallback" id="selFallback">AG</div>
   <div class="sel-border"></div>
   <span class="sel-h h-tl"></span>
   <span class="sel-h h-tr"></span>
